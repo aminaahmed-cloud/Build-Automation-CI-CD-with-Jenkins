@@ -38,7 +38,7 @@ RUN npm install
 CMD ["node", "server.js"]
 ```
 
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/UN5u0F4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 
 ### STEP 2: Create a Full Pipeline for your NodeJS App
@@ -64,15 +64,17 @@ You want the following steps to be included in your pipeline:
 - Create usernamePassword credentials for docker registry called `docker-credentials`
 - Create usernamePassword credentials for git repository called `gitlab-credentials`
 
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/Je7GTf1.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 
 **Configure Node Tool in Jenkins Configuration**
 - Name should be `node`, because that's how it's referenced in the below Jenkinsfile in `tools` block
 
-
 **Install plugin**
 - Install `Pipeline Utility Steps` plugin. This contains readJSON function, that we will use to read the version from package.json 
+
+<img src="https://i.imgur.com/Oqks1Dj.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
 
 ```Jenkinsfile
 
@@ -132,14 +134,41 @@ pipeline {
 }
 ```
 
+<img src="https://i.imgur.com/HxZ1plm.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 
+<img src="https://i.imgur.com/nc5C8rs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
+
+<img src="https://i.imgur.com/wqvVPlM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+
+<img src="https://i.imgur.com/TcTaico.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+
+<img src="https://i.imgur.com/ka2swSG.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+
+<img src="https://i.imgur.com/6BykwDx.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
   
 ### STEP 3: Manually Deploy New Docker Image on Server
 After the pipeline has run successfully, you:
 - Manually deploy the new Docker image on the droplet server.
+
+**steps:**
+
+```sh
+# ssh into your droplet server
+ssh -i ~/id_rsa root@{server-ip-address}
+
+# login to your docker hub registry
+docker login
+
+# pull and run the new docker image from registry
+docker run -p 3000:3000 aminaaahmed323/myapp:{image-name}
+
+```
 
 ### STEP 4: Extract into Jenkins Shared Library
 A colleague from another project tells you that they are building a similar Jenkins pipeline and they could use some of your logic. So you suggest creating a Jenkins Shared Library to make your Jenkinsfile code reusable and shareable.
